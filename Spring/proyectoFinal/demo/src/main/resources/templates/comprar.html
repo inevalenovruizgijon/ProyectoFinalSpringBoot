@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.comprar}">Comprar Skins - CS2 Skin Market</title>
+    <link rel="stylesheet" th:href="@{/comprar.css}">
+</head>
+<body>
+    <!-- Selector de idioma -->
+    <div class="language-switcher" style="text-align:right; margin:10px;">
+        <a th:href="@{/comprar(lang='es')}" style="margin-right:5px;">🇪🇸 Español</a>
+        <a th:href="@{/comprar(lang='en')}">🇬🇧 English</a>
+    </div>
+
+    <h1 th:text="#{title.comprar}">Comprar Skins</h1>
+
+    <form th:action="@{/comprar}" method="get">
+        <select name="orden">
+            <option value="nombreAsc" th:text="#{select.nombreAsc}">Nombre A-Z</option>
+            <option value="nombreDesc" th:text="#{select.nombreDesc}">Nombre Z-A</option>
+            <option value="precioAsc" th:text="#{select.precioAsc}">Precio menor a mayor</option>
+            <option value="precioDesc" th:text="#{select.precioDesc}">Precio mayor a menor</option>
+        </select>
+        <button type="submit" th:text="#{button.ordenar}">Ordenar</button>
+    </form>
+
+    <table border="1">
+        <tr>
+            <th th:text="#{table.header.imagen}">Imagen</th>
+            <th th:text="#{table.header.nombre}">Nombre</th>
+            <th th:text="#{table.header.precio}">Precio</th>
+            <th th:text="#{table.header.accion}">Acción</th>
+        </tr>
+        <tr th:each="skin : ${skinsDisponibles}">
+            <td><img th:src="@{${skin.imagenUrl}}" alt="Imagen Skin" width="80"></td>
+            <td th:text="${skin.nombre}"></td>
+            <td th:text="${skin.precio} + ' €'"></td>
+            <td>
+                <form th:action="@{/añadirCarrito}" method="post" style="display:inline">
+                    <input type="hidden" name="id" th:value="${skin.id}" />
+                    <button type="submit" th:text="#{button.añadirCarrito}">Añadir al carrito</button>
+                </form>
+                <form th:action="@{/comprar}" method="post" style="display:inline">
+                    <input type="hidden" name="id" th:value="${skin.id}" />
+                    <button type="submit" th:text="#{button.comprarAhora}">Comprar ahora</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+    <div class="action-bar">
+        <a th:href="@{/menu}">
+            <button class="action-btn" th:text="#{button.volverMenu}">Volver al menú</button>
+        </a>
+        <a th:href="@{/carrito}">
+            <button class="action-btn" th:text="#{button.verCarrito}">Ver carrito</button>
+        </a>
+        <form th:action="@{/logout}" method="post" style="display:inline">
+            <button type="submit" class="menu-btn" th:text="#{button.cerrarSesion}">Cerrar sesión</button>
+        </form>
+    </div>
+</body>
+</html>

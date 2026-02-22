@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/inicioDeSesion.css}" />
+    <title th:text="#{title.inicioSesion}">Inicio De Sesion - CS Skin Market</title>
+</head>
+<body>
+    <div class="language-switcher" style="text-align:right; margin:10px;">
+    <a th:href="@{/(lang='es')}">🇪🇸</a>
+    <a th:href="@{/(lang='en')}">🇬🇧</a>
+</div>
+    <h1 th:text="#{title.inicioSesion}">Bienvenido a CS Skin Market</h1>
+
+    <form th:action="@{/iniciarSesion}" method="post">
+        <label th:text="#{label.usuario}">Introduce tu usuario</label><br>
+        <input type="text" th:placeholder="#{placeholder.usuario}" name="nombre" required><br>
+
+        <label th:text="#{label.contrasena}">Introduce tu contraseña</label><br>
+        <input type="password" th:placeholder="#{placeholder.contrasena}" name="contrasena" required><br>
+
+        <button type="submit" th:text="#{boton.acceder}" name="acceder">Acceder</button>
+    </form>
+
+    <div th:if="${error}" class="error-msg" th:text="${error}" style="color: red;"></div>
+
+    <br>
+    <div class="info-msg">
+        <span th:text="#{info.noCuenta}">¿No tienes cuenta todavía?</span>
+        <a th:href="@{/crearCuenta}" th:text="#{link.crearCuenta}">Crea una cuenta aquí</a>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.carrito}">Carrito de Compras</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/carrito.css}" />
+</head>
+<body>
+
+<div class="language-switcher" style="text-align:right; margin:10px;">
+    <a th:href="@{/carrito(lang='es')}" style="margin-right:5px;">🇪🇸 Español</a>
+    <a th:href="@{/carrito(lang='en')}">🇬🇧 English</a>
+</div>
+
+<h1 th:text="#{title.carrito}">Carrito de Compras</h1>
+
+<div class="carrito-container">
+
+    <div th:if="${mensaje}" class="mensaje-carrito">
+        <b th:text="${mensaje}">¡Acción realizada correctamente!</b>
+    </div>
+
+    <table>
+        <tr>
+            <th th:text="#{table.header.imagen}">Imagen</th>
+            <th th:text="#{table.header.nombre}">Nombre</th>
+            <th th:text="#{table.header.precio}">Precio</th>
+        </tr>
+        <tr th:each="skin : ${carrito}">
+            <td><img th:src="@{${skin.imagenUrl}}" alt="Imagen Skin" width="80"></td>
+            <td th:text="${skin.nombre}"></td>
+            <td th:text="${skin.precio} + ' €'"></td>
+        </tr>
+    </table>
+
+    <p>
+        <span class="total-label" th:text="#{total.carrito}">Total del carrito:</span>
+        <span th:text="${totalCarrito} + ' €'"></span>
+    </p>
+
+    <form th:action="@{/comprarCarrito}" method="post">
+        <button type="submit" th:text="#{boton.comprarTodo}">Comprar Todo</button>
+    </form>
+
+    <div class="menu-back">
+        <a th:href="@{/comprar}">
+            <button class="menu-back-btn" th:text="#{boton.volverTienda}">Volver a la tienda</button>
+        </a>
+    </div>
+
+</div>
+</body>
+</html>

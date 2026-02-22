@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{title.menu}">Menú Principal - CS Skin Market</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/menu.css}" />
+</head>
+<body>
+    <div class="language-switcher">
+        <a th:href="@{/menu(lang='es')}">🇪🇸 Español</a>
+        <a th:href="@{/menu(lang='en')}">🇬🇧 English</a>
+    </div>
+
+    <header>
+        <h2>CS2 Skin Market</h2>
+        <h3><span th:text="#{header.bienvenido}">Bienvenido</span> <span th:text="${usuario}"></span></h3>
+    </header>
+
+    <div class="menu-container">
+        <h1 th:text="#{menu.titulo}">Menú Principal</h1>
+        <div class="menu-btn-group">
+            <a th:href="@{/comprar}">
+                <button class="menu-btn">
+                    <img src="https://www.csgoroll.com/blog/content/images/size/w2000/2025/02/1f828-17109267473263-1920.webp" class="menu-icon" alt="Comprar">
+                    <span th:text="#{boton.comprar}">Comprar skins</span>
+                </button>
+            </a>
+            <a th:href="@{/vender}">
+                <button class="menu-btn">
+                    <img src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200_webp/3f368665126337.5eb460c8811b1.jpg" class="menu-icon" alt="Vender">
+                    <span th:text="#{boton.vender}">Vender skins</span>
+                </button>
+            </a>
+            <a th:href="@{/carrito}">
+                <button class="menu-btn">
+                    <img src="https://cdn-icons-png.flaticon.com/512/263/263142.png" class="menu-icon" alt="Carrito">
+                    <span th:text="#{button.verCarrito}">Ver carrito</span>
+                </button>
+            </a>
+        
+        </div>
+        <form th:action="@{/logout}" method="post" style="display:inline">
+            <button type="submit" class="menu-btn" th:text="#{boton.cerrarSesion}">Cerrar sesión</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>Instagram</p>
+        <p>skinmarket@gmail.com</p>
+        <p>+34 666 666 666</p>
+    </footer>
+</body>
+</html>

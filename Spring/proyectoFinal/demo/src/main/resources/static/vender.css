@@ -1,0 +1,140 @@
+body {
+    background: #18171A;
+    color: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    position: relative;
+}
+
+.vender-container {
+    max-width: 460px;
+    width: 95vw;
+    margin: 70px auto 0 auto;
+    background: linear-gradient(160deg, #252326 80%, #2a2228 100%);
+    border-radius: 18px;
+    box-shadow: 0 0 32px #b0002070, 0 2px 8px #0008;
+    padding: 38px 32px 32px 32px;
+    border: 1.5px solid #b0002044;
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 28px;
+    font-size: 1.7rem;
+    letter-spacing: 1px;
+    text-shadow: 0 0 18px #b0002099;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+label {
+    font-weight: bold;
+    color: #e0e0e0;
+    margin-bottom: 1px;
+    font-size: 0.97rem;
+    letter-spacing: 0.3px;
+}
+
+input[type=text],
+input[type=number],
+select {
+    padding: 9px 12px;
+    border-radius: 8px;
+    border: 1.5px solid #b00020;
+    background: #1c1b1e;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type=text]:focus,
+input[type=number]:focus,
+select:focus {
+    border-color: #ef233c;
+    box-shadow: 0 0 8px #ef233c55;
+}
+
+select option {
+    background: #1c1b1e;
+    color: #fff;
+}
+
+button[type=submit] {
+    background: linear-gradient(90deg, #b00020, #ef233c 80%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 13px 0;
+    font-size: 1.13rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 18px;
+    box-shadow: 0 2px 14px #b0002055;
+    transition: background 0.2s, transform 0.13s, box-shadow 0.2s;
+    letter-spacing: 0.5px;
+}
+
+button[type=submit]:hover {
+    background: linear-gradient(90deg, #ef233c, #b00020 80%);
+    transform: scale(1.03);
+    box-shadow: 0 4px 20px #ef233c66;
+}
+
+.menu-back {
+    display: flex;
+    justify-content: center;
+    margin-top: 22px;
+}
+
+.menu-back-btn {
+    background: linear-gradient(90deg, #b00020, #ef233c 80%);
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 28px;
+    cursor: pointer;
+    box-shadow: 0 4px 18px #b0002050;
+    transition: background 0.18s, transform 0.11s;
+}
+
+.menu-back-btn:hover {
+    background: #ef233c;
+    transform: scale(1.04);
+}
+
+.menu-back a {
+    text-decoration: none;
+}
+
+.language-switcher {
+    position: absolute;
+    top: 14px;
+    right: 22px;
+    display: flex;
+    gap: 10px;
+}
+
+.language-switcher a {
+    color: #fff;
+    text-decoration: none;
+    background: #2e2d31;
+    border: 1.5px solid #b00020;
+    border-radius: 8px;
+    padding: 5px 13px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.language-switcher a:hover {
+    background: #b00020;
+    border-color: #ef233c;
+}

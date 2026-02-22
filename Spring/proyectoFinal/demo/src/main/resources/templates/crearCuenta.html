@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/inicioDeSesion.css}" />
+    <title th:text="#{title.crearCuenta}">Crear cuenta - CS2 Skin Market</title>
+</head>
+<body>
+    <div class="language-switcher">
+        <a th:href="@{/crearCuenta(lang='es')}">🇪🇸 Español</a>
+        <a th:href="@{/crearCuenta(lang='en')}">🇬🇧 English</a>
+    </div>
+
+    <h1 th:text="#{title.crearCuenta}">Crear Cuenta</h1>
+
+    <form th:action="@{/crearNuevaCuenta}" method="post">
+        <label th:text="#{label.correo}">Introduce tu correo electrónico</label>
+        <input type="email" th:placeholder="#{placeholder.correo}" name="correo" required>
+
+        <label th:text="#{label.usuario}">Introduce tu nombre de usuario</label>
+        <input type="text" th:placeholder="#{placeholder.usuario}" name="nombre" required>
+
+        <label th:text="#{label.contrasena}">Introduce tu contraseña</label>
+        <input type="password" th:placeholder="#{placeholder.contrasena}" name="contrasena" required>
+
+        <button type="submit" th:text="#{boton.crearCuenta}">Crear Cuenta</button>
+    </form>
+
+    <div th:if="${error}" class="error-msg" th:text="${error}"></div>
+
+    <div class="info-msg">
+        <span th:text="#{info.Cuenta}">¿Ya tienes una cuenta?</span>
+        <a th:href="@{/}" th:text="#{link.iniciaCuenta}">Inicia sesión aquí</a>
+    </div>
+</body>
+</html>

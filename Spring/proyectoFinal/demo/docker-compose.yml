@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: toor
+      MYSQL_DATABASE: cs_skin_market
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./cs_skin_market.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ptoor"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/cs_skin_market
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: toor
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+    depends_on:
+      mysql:
+        condition: service_healthy
+    restart: on-failure
