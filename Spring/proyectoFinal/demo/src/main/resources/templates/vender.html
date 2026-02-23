@@ -14,7 +14,6 @@
     <h1 th:text="#{vender.titulo}">Vender Skins</h1>
     <form th:action="@{/venderSkin}" method="post">
 
-    <!-- Categoría -->
     <label for="categoria" th:text="#{vender.categoria}">Categoría:</label>
     <select id="categoria" name="categoriaId" required>
         <option value="" th:text="#{vender.seleccioneCategoria}">Seleccione categoría</option>
@@ -24,21 +23,19 @@
         </option>
     </select>
 
-    <!-- Tipo -->
     <label for="tipo" th:text="#{vender.tipo}">Tipo:</label>
     <select id="tipo" name="tipoId" required>
         <option value="" th:text="#{vender.seleccioneTipo}">Seleccione tipo</option>
     </select>
 
-    <!-- Skin -->
     <label for="skin" th:text="#{vender.skin}">Nombre de la skin:</label>
-    <input type="text" id="skin" name="skinNombre" th:placeholder="#{vender.skinPlaceholder}" placeholder="Escribe el nombre de la skin" required>
+    <input type="text" id="skin" name="skinNombre" th:placeholder="#{vender.skinPlaceholder}" placeholder="Escribe el nombre de la skin" required maxlength="50">
 
     <label for="precio" th:text="#{vender.precio}">Precio de venta (€):</label>
     <input type="number" id="precio" name="precio" min="0" required>
 
     <label for="imagen" th:text="#{vender.imagen}">URL de la imagen:</label>
-    <input type="text" id="imagen" name="imagenUrl" th:placeholder="#{vender.imagenPlaceholder}" placeholder="https://..." required>
+    <input type="text" id="imagen" name="imagenUrl" th:placeholder="#{vender.imagenPlaceholder}" placeholder="https://..." required maxlength="450">
 
     <button type="submit" th:text="#{vender.boton}">Enviar para venta</button>
     <div class="menu-back">
