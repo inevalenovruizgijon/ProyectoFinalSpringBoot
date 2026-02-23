@@ -17,7 +17,7 @@
         <input type="text" th:placeholder="#{placeholder.usuario}" name="nombre" required><br>
 
         <label th:text="#{label.contrasena}">Introduce tu contraseña</label><br>
-        <input type="password" th:placeholder="#{placeholder.contrasena}" name="contrasena" required><br>
+        <input type="password" th:placeholder="#{placeholder.contrasena}" name="contrasena" maxlength="20" required><br>
 
         <button type="submit" th:text="#{boton.acceder}" name="acceder">Acceder</button>
     </form>

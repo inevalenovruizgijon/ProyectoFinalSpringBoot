@@ -69,19 +69,22 @@ public class SecurityConfig {
                     "/iniciarSesion", 
                     "/crearCuenta", 
                     "/crearNuevaCuenta",   
-                    "/inicioDeSesion.css"
-                ).permitAll()  // Rutas públicas
-                .anyRequest().authenticated() // Resto de rutas requieren login
+                    "/inicioDeSesion.css",
+                    "/swagger-ui/**",
+                    "/v3/api-docs/**",
+                    "/swagger-ui.html"
+                ).permitAll()  
+                .anyRequest().authenticated() 
             )
 
             // Configuración de formulario de login
             .formLogin(form -> form
-                .loginPage("/")                      // Página de login
-                .loginProcessingUrl("/iniciarSesion") // URL que procesa POST
-                .usernameParameter("nombre")          // Campo del formulario para username
-                .passwordParameter("contrasena")      // Campo del formulario para password
-                .defaultSuccessUrl("/menu", true)     // Página a redirigir al login exitoso
-                .failureUrl("/?error")                // Página en caso de error
+                .loginPage("/")                      
+                .loginProcessingUrl("/iniciarSesion") 
+                .usernameParameter("nombre")         
+                .passwordParameter("contrasena")      
+                .defaultSuccessUrl("/menu", true)     
+                .failureUrl("/?error")                
                 .permitAll()
             )
 
@@ -94,8 +97,8 @@ public class SecurityConfig {
 
             // Configuración de sesiones
             .sessionManagement(session -> session
-                .maximumSessions(1)          // Máximo una sesión por usuario
-                .maxSessionsPreventsLogin(false) // Permite login reemplazando sesión existente
+                .maximumSessions(1)          
+                .maxSessionsPreventsLogin(false) 
             );
 
         return http.build();
