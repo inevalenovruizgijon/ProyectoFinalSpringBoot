@@ -35,7 +35,7 @@ public class EmailService {
         headers.set("api-key", apiKey);
 
         Map<String, Object> body = Map.of(
-                "sender", Map.of("email", "TU_EMAIL_VERIFICADO"),
+                "sender", Map.of("email", "nevalenov.iaroslav@gmail.com"),
                 "to", new Object[]{ Map.of("email", destinatario) },
                 "subject", asunto,
                 "htmlContent", contenido
