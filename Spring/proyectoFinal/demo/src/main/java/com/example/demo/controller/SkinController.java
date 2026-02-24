@@ -25,7 +25,7 @@ import com.example.demo.repository.CategoriaRepository;
 import com.example.demo.repository.SkinRepository;
 import com.example.demo.repository.TipoRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.EmailService;
+// import com.example.demo.service.EmailService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -39,8 +39,8 @@ public class SkinController {
     @Autowired
 private MessageSource messageSource;
 
-    @Autowired
-    private EmailService emailService;
+    // @Autowired
+    // private EmailService emailService;
 
     @Autowired
     private SkinRepository skinRepo;  // Inyecta repo JPA
@@ -93,11 +93,11 @@ private MessageSource messageSource;
             User usuario = userRepo.findByNombre(principal.getName());
             String emailUsuario = usuario.getCorreo();
 
-            emailService.enviarEmail(
-                emailUsuario,
-                "Compra realizada",
-                "Has comprado la skin: " + skin.getNombre() + " por " + skin.getPrecio() + " €"
-            );
+            // emailService.enviarEmail(
+            //     emailUsuario,
+            //     "Compra realizada",
+            //     "Has comprado la skin: " + skin.getNombre() + " por " + skin.getPrecio() + " €"
+            // );
 
             skinRepo.deleteById(id);
 
@@ -192,19 +192,19 @@ private MessageSource messageSource;
             skinRepo.deleteById(skin.getId());
         }
 
-        try {
-            emailService.enviarEmail(
-                emailUsuario,
-                "Compra del carrito realizada",
-                mensajeEmail.toString()
-            );
-        } catch (Exception e) {
-            model.addAttribute("mensaje", messageSource.getMessage("mensaje.emailError", null, locale));
-            session.removeAttribute("carrito");
-            model.addAttribute("carrito", new ArrayList<>());
-            model.addAttribute("totalCarrito", 0.0);
-            return "carrito";
-        }
+        // try {
+        //     emailService.enviarEmail(
+        //         emailUsuario,
+        //         "Compra del carrito realizada",
+        //         mensajeEmail.toString()
+        //     );
+        // } catch (Exception e) {
+        //     model.addAttribute("mensaje", messageSource.getMessage("mensaje.emailError", null, locale));
+        //     session.removeAttribute("carrito");
+        //     model.addAttribute("carrito", new ArrayList<>());
+        //     model.addAttribute("totalCarrito", 0.0);
+        //     return "carrito";
+        // }
 
         session.removeAttribute("carrito");
         model.addAttribute("mensaje", messageSource.getMessage("mensaje.carritoComprado", null, locale));
