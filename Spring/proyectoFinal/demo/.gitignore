@@ -31,3 +31,21 @@ build/
 
 ### VS Code ###
 .vscode/
+# Archivos sensibles
+src/main/resources/application.properties
+.env
+
+# Logs
+*.log
+
+# Carpeta target (Maven)
+target/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.iml

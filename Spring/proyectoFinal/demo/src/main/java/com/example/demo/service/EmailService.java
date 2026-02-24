@@ -21,9 +21,8 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class EmailService {
 
-    @Value("${brevo.api.key}")
-    private String apiKey;
-
+    @Value("${BREVO_API_KEY}")
+private String apiKey;
     public void enviarEmail(String destinatario, String asunto, String contenido) {
 
         RestTemplate restTemplate = new RestTemplate();
