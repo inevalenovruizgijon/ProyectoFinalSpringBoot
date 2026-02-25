@@ -104,7 +104,7 @@ public String procesarVender(@RequestParam Long tipoId,
             .orElseThrow(() -> new IllegalArgumentException("Tipo no encontrado"));
 
     if (imagenUrl == null || imagenUrl.trim().isEmpty()) {
-        imagenUrl = "/favicon.ico"; 
+        imagenUrl = "/imagen.png"; 
     }
 
     Skin nueva = new Skin();
