@@ -31,6 +31,16 @@
             <td><img th:src="@{${skin.imagenUrl}}" alt="Imagen Skin" width="80"></td>
             <td th:text="${skin.nombre}"></td>
             <td th:text="${skin.precio} + ' €'"></td>
+             <form th:action="@{/quitarCarrito}" method="post">
+            <input type="hidden" th:name="id" th:value="${skin.id}" />
+            <button type="submit">Quitar</button>
+        </form>
+    </td>
+    <td>
+        <form th:action="@{/comprarDelCarrito}" method="post">
+            <input type="hidden" th:name="id" th:value="${skin.id}" />
+            <button type="submit">Comprar</button>
+        </form>
         </tr>
     </table>
 

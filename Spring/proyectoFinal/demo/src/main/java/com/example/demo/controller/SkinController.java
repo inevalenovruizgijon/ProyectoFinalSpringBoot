@@ -216,16 +216,16 @@ public String mostrarComprar(@RequestParam(required = false) String orden,
                              Model model,
                              HttpSession session) {
 
-    // 1️⃣ Traer todas las skins
     List<Skin> listaSkins = skinRepo.findAll();
 
-    // 2️⃣ Traer el carrito de sesión
     List<Skin> carrito = (List<Skin>) session.getAttribute("carrito");
     if (carrito != null && !carrito.isEmpty()) {
-        listaSkins.removeAll(carrito); // Filtra skins ya en el carrito
+        List<Long> idsEnCarrito = carrito.stream()
+                                         .map(Skin::getId)
+                                         .toList();
+        listaSkins.removeIf(skin -> idsEnCarrito.contains(skin.getId()));
     }
 
-    // 3️⃣ Ordenar según parámetro
     if (orden != null) {
         switch (orden) {
             case "nombreAsc":
@@ -245,5 +245,44 @@ public String mostrarComprar(@RequestParam(required = false) String orden,
 
     model.addAttribute("skinsDisponibles", listaSkins);
     return "comprar";
+}
+
+@PostMapping("/comprarDelCarrito")
+public String comprarDelCarrito(@RequestParam Long id, HttpSession session, Principal principal, Model model, Locale locale) {
+    List<Skin> carrito = (List<Skin>) session.getAttribute("carrito");
+    if (carrito == null) carrito = new ArrayList<>();
+
+    Optional<Skin> optSkin = carrito.stream().filter(skin -> skin.getId().equals(id)).findFirst();
+    if (optSkin.isPresent()) {
+        Skin skin = optSkin.get();
+        User usuario = userRepo.findByNombre(principal.getName());
+
+       
+
+        skinRepo.deleteById(skin.getId());
+
+        carrito.remove(skin);
+        session.setAttribute("carrito", carrito);
+
+        model.addAttribute("mensaje", messageSource.getMessage("mensaje.compraExito", null, locale));
+    } else {
+        model.addAttribute("mensaje", messageSource.getMessage("mensaje.skinNoExiste", null, locale));
+    }
+
+    model.addAttribute("carrito", carrito);
+    double total = carrito.stream().mapToDouble(Skin::getPrecio).sum();
+    model.addAttribute("totalCarrito", total);
+
+    return "carrito";
+}
+
+@PostMapping("/quitarCarrito")
+public String quitarDelCarrito(@RequestParam Long id, HttpSession session) {
+    List<Skin> carrito = (List<Skin>) session.getAttribute("carrito");
+    if (carrito != null) {
+        carrito.removeIf(skin -> skin.getId().equals(id));
+        session.setAttribute("carrito", carrito);
+    }
+    return "redirect:/carrito";
 }
 }
