@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="icon" type="image/png" th:href="@{/favicon.png}">
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}">
     <meta charset="UTF-8">
     <title th:text="#{title.carrito}">Carrito de Compras</title>
     <link rel="stylesheet" type="text/css" th:href="@{/carrito.css}" />
@@ -22,26 +22,25 @@
     </div>
 
     <table>
-        <tr>
-            <th th:text="#{table.header.imagen}">Imagen</th>
-            <th th:text="#{table.header.nombre}">Nombre</th>
-            <th th:text="#{table.header.precio}">Precio</th>
-        </tr>
-        <tr th:each="skin : ${carrito}">
-            <td><img th:src="@{${skin.imagenUrl}}" alt="Imagen Skin" width="80"></td>
-            <td th:text="${skin.nombre}"></td>
-            <td th:text="${skin.precio} + ' €'"></td>
-             <form th:action="@{/quitarCarrito}" method="post">
+       <tr th:each="skin : ${carrito}">
+    <td><img th:src="@{${skin.imagenUrl}}" alt="Imagen Skin" width="80"></td>
+    <td th:text="${skin.nombre}"></td>
+    <td th:text="${skin.precio} + ' €'"></td>
+    <td>
+        <form th:action="@{/quitarCarrito}" method="post">
             <input type="hidden" th:name="id" th:value="${skin.id}" />
-            <button type="submit">Quitar</button>
+            <button type="submit" th:text="#{boton.quitar}">Quitar</button>
         </form>
     </td>
     <td>
         <form th:action="@{/comprarDelCarrito}" method="post">
             <input type="hidden" th:name="id" th:value="${skin.id}" />
-            <button type="submit">Comprar</button>
+            <button type="submit" th:text="#{boton.comprar}">Comprar</button>
+
         </form>
-        </tr>
+    </td>
+</tr>
+    
     </table>
 
     <p>
