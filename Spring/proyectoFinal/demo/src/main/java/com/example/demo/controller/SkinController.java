@@ -84,36 +84,40 @@ private MessageSource messageSource;
      * @param model     Modelo para enviar mensajes a la vista
      * @return Vista del carrito
      */
-    @PostMapping("/comprar")
-    public String procesarCompra(@RequestParam Long id, HttpSession session, Principal principal, Model model, Locale locale) {
-        Optional<Skin> optSkin = skinRepo.findById(id);
-        if (optSkin.isPresent()) {
-            Skin skin = optSkin.get();
+    @GetMapping("/comprar")
+public String mostrarComprar(@RequestParam(required = false) String orden, Model model, HttpSession session) {
 
-            User usuario = userRepo.findByNombre(principal.getName());
-            String emailUsuario = usuario.getCorreo();
+    // 1️⃣ Traer todas las skins
+    List<Skin> listaSkins = skinRepo.findAll();
 
-            // emailService.enviarEmail(
-            //     emailUsuario,
-            //     "Compra realizada",
-            //     "Has comprado la skin: " + skin.getNombre() + " por " + skin.getPrecio() + " €"
-            // );
-
-            skinRepo.deleteById(id);
-
-            List<Skin> carrito = (List<Skin>) session.getAttribute("carrito");
-            if (carrito != null) {
-                carrito.remove(skin);
-                session.setAttribute("carrito", carrito);
-            }
-
-            model.addAttribute("mensaje", messageSource.getMessage("mensaje.compraExito", null, locale));
-        } else {
-            model.addAttribute("mensaje", messageSource.getMessage("mensaje.skinNoExiste", null, locale));
-        }
-
-        return "carrito";
+    // 2️⃣ Traer el carrito de sesión
+    List<Skin> carrito = (List<Skin>) session.getAttribute("carrito");
+    if (carrito != null && !carrito.isEmpty()) {
+        // 3️⃣ Filtrar las skins que ya están en el carrito
+        listaSkins.removeAll(carrito);
     }
+
+    // 4️⃣ Ordenamiento (igual que antes)
+    if (orden != null) {
+        switch (orden) {
+            case "nombreAsc":
+                listaSkins.sort(Comparator.comparing(Skin::getNombre));
+                break;
+            case "nombreDesc":
+                listaSkins.sort(Comparator.comparing(Skin::getNombre).reversed());
+                break;
+            case "precioAsc":
+                listaSkins.sort(Comparator.comparingDouble(Skin::getPrecio));
+                break;
+            case "precioDesc":
+                listaSkins.sort(Comparator.comparingDouble(Skin::getPrecio).reversed());
+                break;
+        }
+    }
+
+    model.addAttribute("skinsDisponibles", listaSkins);
+    return "comprar";
+}
     /**
      * Procesa la venta de una nueva skin.
      * Asigna la categoría desde el tipo seleccionado y guarda la skin en la BD.
