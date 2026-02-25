@@ -124,23 +124,29 @@ private MessageSource messageSource;
      * @return Redirección al menú principal
      */
     @PostMapping("/venderSkin")
-    public String procesarVender(@RequestParam Long tipoId,
-                                 @RequestParam String skinNombre,
-                                 @RequestParam double precio) {
+public String procesarVender(@RequestParam Long tipoId,
+                             @RequestParam String skinNombre,
+                             @RequestParam double precio,
+                             @RequestParam(required = false) String imagenUrl) {
 
-        Tipo tipo = tipoRepository.findById(tipoId)
-                .orElseThrow(() -> new IllegalArgumentException("Tipo no encontrado"));
+    Tipo tipo = tipoRepository.findById(tipoId)
+            .orElseThrow(() -> new IllegalArgumentException("Tipo no encontrado"));
 
-        Skin nueva = new Skin();
-        nueva.setNombre(skinNombre);
-        nueva.setTipo(tipo);
-        nueva.setCategoria(tipo.getCategoria());
-        nueva.setPrecio(precio);
-
-        skinRepo.save(nueva);
-
-        return "redirect:/menu";
+    if (imagenUrl == null || imagenUrl.trim().isEmpty()) {
+        imagenUrl = "/favicon.png"; 
     }
+
+    Skin nueva = new Skin();
+    nueva.setNombre(skinNombre);
+    nueva.setTipo(tipo);
+    nueva.setCategoria(tipo.getCategoria());
+    nueva.setPrecio(precio);
+    nueva.setImagenUrl(imagenUrl); 
+
+    skinRepo.save(nueva);
+
+    return "redirect:/menu";
+}
 
     /**
      * Muestra el carrito con todas las skins añadidas.
