@@ -32,9 +32,8 @@
             <th th:text="#{table.header.accion}">Acción</th>
         </tr>
         <tr th:each="skin : ${skinsDisponibles}">
-            <td><img th:src="@{${skin.imagenUrl}}"
+            <td><img th:src="${skin.imagenUrl}"
      alt="Imagen Skin"
-     width="80"
      onerror="this.onerror=null; this.src='/imagen.png';"></td>
             <td th:text="${skin.nombre}"></td>
             <td th:text="${skin.precio} + ' €'"></td>
