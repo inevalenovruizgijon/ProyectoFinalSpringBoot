@@ -84,40 +84,7 @@ private MessageSource messageSource;
      * @param model     Modelo para enviar mensajes a la vista
      * @return Vista del carrito
      */
-    @GetMapping("/comprar")
-public String mostrarComprar(@RequestParam(required = false) String orden, Model model, HttpSession session) {
-
-    // 1️⃣ Traer todas las skins
-    List<Skin> listaSkins = skinRepo.findAll();
-
-    // 2️⃣ Traer el carrito de sesión
-    List<Skin> carrito = (List<Skin>) session.getAttribute("carrito");
-    if (carrito != null && !carrito.isEmpty()) {
-        // 3️⃣ Filtrar las skins que ya están en el carrito
-        listaSkins.removeAll(carrito);
-    }
-
-    // 4️⃣ Ordenamiento (igual que antes)
-    if (orden != null) {
-        switch (orden) {
-            case "nombreAsc":
-                listaSkins.sort(Comparator.comparing(Skin::getNombre));
-                break;
-            case "nombreDesc":
-                listaSkins.sort(Comparator.comparing(Skin::getNombre).reversed());
-                break;
-            case "precioAsc":
-                listaSkins.sort(Comparator.comparingDouble(Skin::getPrecio));
-                break;
-            case "precioDesc":
-                listaSkins.sort(Comparator.comparingDouble(Skin::getPrecio).reversed());
-                break;
-        }
-    }
-
-    model.addAttribute("skinsDisponibles", listaSkins);
-    return "comprar";
-}
+   
     /**
      * Procesa la venta de una nueva skin.
      * Asigna la categoría desde el tipo seleccionado y guarda la skin en la BD.
@@ -245,28 +212,38 @@ public String procesarVender(@RequestParam Long tipoId,
      * @return Vista de compra
      */
     @GetMapping("/comprar")
-    public String mostrarComprar(@RequestParam(required = false) String orden, Model model) {
-        List<Skin> listaSkins = skinRepo.findAll();
+public String mostrarComprar(@RequestParam(required = false) String orden,
+                             Model model,
+                             HttpSession session) {
 
-        if (orden != null) {
-            switch (orden) {
-                case "nombreAsc":
-                    listaSkins.sort(Comparator.comparing(Skin::getNombre));
-                    break;
-                case "nombreDesc":
-                    listaSkins.sort(Comparator.comparing(Skin::getNombre).reversed());
-                    break;
-                case "precioAsc":
-                    listaSkins.sort(Comparator.comparingDouble(Skin::getPrecio));
-                    break;
-                case "precioDesc":
-                    listaSkins.sort(Comparator.comparingDouble(Skin::getPrecio).reversed());
-                    break;
-            }
-        }
+    // 1️⃣ Traer todas las skins
+    List<Skin> listaSkins = skinRepo.findAll();
 
-        model.addAttribute("skinsDisponibles", listaSkins);
-        return "comprar";
+    // 2️⃣ Traer el carrito de sesión
+    List<Skin> carrito = (List<Skin>) session.getAttribute("carrito");
+    if (carrito != null && !carrito.isEmpty()) {
+        listaSkins.removeAll(carrito); // Filtra skins ya en el carrito
     }
 
+    // 3️⃣ Ordenar según parámetro
+    if (orden != null) {
+        switch (orden) {
+            case "nombreAsc":
+                listaSkins.sort(Comparator.comparing(Skin::getNombre));
+                break;
+            case "nombreDesc":
+                listaSkins.sort(Comparator.comparing(Skin::getNombre).reversed());
+                break;
+            case "precioAsc":
+                listaSkins.sort(Comparator.comparingDouble(Skin::getPrecio));
+                break;
+            case "precioDesc":
+                listaSkins.sort(Comparator.comparingDouble(Skin::getPrecio).reversed());
+                break;
+        }
+    }
+
+    model.addAttribute("skinsDisponibles", listaSkins);
+    return "comprar";
+}
 }
