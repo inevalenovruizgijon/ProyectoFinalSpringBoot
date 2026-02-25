@@ -285,4 +285,28 @@ public String quitarDelCarrito(@RequestParam Long id, HttpSession session) {
     }
     return "redirect:/carrito";
 }
+
+@PostMapping("/comprar")
+public String comprarAhora(@RequestParam Long id, Principal principal, Model model, Locale locale) {
+    Optional<Skin> optSkin = skinRepo.findById(id);
+    if (optSkin.isEmpty()) {
+        model.addAttribute("mensaje", messageSource.getMessage("mensaje.skinNoExiste", null, locale));
+        List<Skin> listaSkins = skinRepo.findAll();
+        model.addAttribute("skinsDisponibles", listaSkins);
+        return "comprar";
+    }
+
+    Skin skin = optSkin.get();
+
+    User usuario = userRepo.findByNombre(principal.getName());
+
+    skinRepo.deleteById(skin.getId());
+
+    model.addAttribute("mensaje", messageSource.getMessage("mensaje.compraExito", null, locale));
+
+    List<Skin> listaSkins = skinRepo.findAll();
+    model.addAttribute("skinsDisponibles", listaSkins);
+
+    return "comprar";
+}
 }
