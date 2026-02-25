@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="icon" type="image/x-icon" th:href="@{/favicon.ico}">
+    
     <meta charset="UTF-8">
     <title th:text="#{title.comprar}">Comprar Skins - CS2 Skin Market</title>
     <link rel="stylesheet" th:href="@{/comprar.css}">
@@ -32,9 +33,7 @@
             <th th:text="#{table.header.accion}">Acción</th>
         </tr>
         <tr th:each="skin : ${skinsDisponibles}">
-            <td><img th:src="${skin.imagenUrl}"
-     alt="Imagen Skin"
-     onerror="this.onerror=null; this.src='/imagen.png';"></td>
+            <td><img th:src="@{${skin.imagenUrl}}" alt="Imagen Skin" width="80"></td>
             <td th:text="${skin.nombre}"></td>
             <td th:text="${skin.precio} + ' €'"></td>
             <td>
