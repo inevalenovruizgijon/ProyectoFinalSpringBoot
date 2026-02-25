@@ -105,7 +105,7 @@ public String iniciarSesion(@RequestParam String nombre,
         return "menu";
     } else {
         model.addAttribute("error", messageSource.getMessage("error.loginIncorrecto", null, locale));
-        return "redirect:/";
-    }
+    return "inicioDeSesion";
 }
+    }
 }

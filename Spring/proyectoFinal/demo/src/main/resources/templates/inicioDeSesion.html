@@ -15,7 +15,7 @@
 
     <form th:action="@{/iniciarSesion}" method="post">
         <label th:text="#{label.usuario}">Introduce tu usuario</label><br>
-        <input type="text" th:placeholder="#{placeholder.usuario}" name="nombre" required><br>
+        <input type="text" th:placeholder="#{placeholder.usuario}" name="nombre" required maxlength="25"><br>
 
         <label th:text="#{label.contrasena}">Introduce tu contraseña</label><br>
         <input type="password" th:placeholder="#{placeholder.contrasena}" name="contrasena" maxlength="20" required><br>
